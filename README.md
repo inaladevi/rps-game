@@ -1,4 +1,4 @@
-**Rock, Paper, Scissors**
+# **Rock, Paper, Scissors**
 
 A simple console-only Rock–Paper–Scissors game
 

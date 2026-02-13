@@ -1,5 +1,3 @@
-function playGame() {
-
 let humanScore = 0;
 let computerScore = 0;
 
@@ -16,27 +14,7 @@ function getComputerChoice() {
 	}
 }
 
-function getHumanChoice() {
-	let choice = prompt("Rock, Paper, or Scissors ?");
-
-    if (choice === null) return null;
-
-    if (choice === "rock" || choice === "paper" || choice === "scissors") {
-        return choice;
-    }
-
-    else {
-        console.log("Invalid choice. Please choose Rock, Paper, or Scissors.");
-        return getHumanChoice();
-    }
-}
-
 function playRound(humanChoice, computerChoice) {
-    if (humanChoice === null) {
-        console.log("Round cancelled by user.");
-        return "aborted";
-    }
-
     if (humanChoice === computerChoice) {
         console.log(`It's a tie! Both chose ${humanChoice}.`);
         return "tie";
@@ -58,31 +36,52 @@ function playRound(humanChoice, computerChoice) {
     }
 }
 
-const totalRounds = 5;
+const rockButton = document.querySelector("#rock");
+const paperButton = document.querySelector("#paper");
+const scissorsButton = document.querySelector("#scissors")
+const resultDiv = document.querySelector("#results");
+const scoreDiv = document.querySelector("#score-board")
 
-for (let round = 1; round <= totalRounds; round++) {
-    const humanSelection = getHumanChoice();
+function handleChoice(event) {
+    const humanSelection = event.target.id;
     const computerSelection = getComputerChoice();
 
-    const result = playRound(humanSelection, computerSelection);
+    const result = playRound(humanSelection,computerSelection);
 
-    if (result === "aborted") {
-        console.log("Game aborted by user.");
-        break;
+    resultDiv.textContent = `Human: ${humanSelection} | Computer: ${computerSelection} | Winner: ${result}`;
+    scoreDiv.textContent= (`Scores- human: ${humanScore} | computer: ${computerScore}`);
+
+    if (humanScore === 5 || computerScore === 5) {
+
+        if (humanScore === 5) {
+            alert("Congratulations! You beat the machine!")
+        } 
+        else{
+            alert("Game Over! The computer won.")
+        }
+
+        humanScore = 0;
+        computerScore = 0;
+
+        scoreDiv.textContent = `Scores- human: 0 | computer: 0`;
+        resultDiv.textContent = "New game started!";
+        
     }
 
-    console.log(`Round ${round}|Winner: ${result}|CurrentScore - Human: ${humanScore}, Computer: ${computerScore}`);
 }
 
-    console.log(`Final score: Human ${humanScore} | Computer ${computerScore}`);
+rockButton.addEventListener("click", handleChoice);
+paperButton.addEventListener("click",handleChoice);
+scissorsButton.addEventListener("click",handleChoice);
 
-    if (humanScore > computerScore) {
-        console.log("Human wins!");
-    } else if (computerScore > humanScore) {
-        console.log("Human lose :(");
-    } else {
-        console.log("It's a tie!");
-    }
 
-}
+
+
+
+
+
+
+
+
+
 
